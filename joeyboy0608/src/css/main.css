@@ -1,0 +1,52 @@
+*,
+*::after,
+*::before {
+    margin:0;
+    padding: 0;
+    box-sizing: inherit;
+}
+html{
+     /*  (10/16 *100) = 62.5  */
+    font-size: 62.5%; 
+}
+body {
+    font-family: "lato", sans-serif;
+    font-weight: 400;
+    line-height: 1.7;
+    color: #777;
+    box-sizing: border-box;
+}
+
+/*Achievements*/
+.Achievements{
+   background-color: orange;
+   color: #fff;
+}
+/*about-us*/
+.about-us{
+    background-image: url('../img/college.jpeg');
+    background-size: cover;
+    height: 90vh;
+}
+.about-box{
+    background-color: rgba(48, 53, 49, .2);
+    padding:10%;
+    
+}
+.Our-Campuses{
+    background-color: 
+}
+/*Highlights*/
+.Highlights-img{
+    width:98%;
+}
+.Highlights{
+    margin-top: 10px;
+}
+
+.Highlights li{
+    list-style: none;
+   
+    
+    
+}
