@@ -449,10 +449,126 @@ body {
 }
 
 /* gallery */
+
 .gallery{
-    width: 90%;
-    margin: 0 auto;
+    width: 80%;
+    margin: 0px auto;
 }
+
 .Highlights-img {
     width: 100%;
+    border:3px solid rgb(137, 136, 134);
+    border-radius: 3px;
+}
+.Highlights li{
+    list-style: none;
+    color: rgb(44, 32, 104);
+}
+.gallery-headding{
+    color: rgb(255, 121, 22);
+}
+/*Apply-now*/
+.apply-now{
+    width: 100%;
+    background-color: rgb(202, 154, 44);
+    padding:2rem 6rem;
+    color:#fff;
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.apply-now-heading-main{
+    font-size: 3rem;
+    font-weight: 600;
+}
+.apply-now-heading-sub{
+    font-size: 3rem;
+    font-weight: 100;
+}
+.apply-now-textbox{
+    margin-left:6rem;
+}
+.btn-apply {
+    margin-left:6rem;
+    color: #fff;
+    background-color: rgb(66, 108, 220);
+    padding:1rem 5rem;
+    font-size: 2.5rem;
+    border-radius: 5px;
+
+} 
+/* footer */
+.footer {
+    width: 100%;
+
+}
+.footer-head{
+    width: 100%;
+    background-color: rgb(20, 45, 86);
+}
+
+.logo-img{
+    padding:6rem;
+}
+.footer-logo{
+    height: ;
+}
+.University-address{
+    padding:4rem;
+    font-size: 1.3rem;
+}
+.address{
+    color: #fff;
+}
+.strong{
+    font-size: 1.8rem;
+    color: rgb(200, 153, 35);
+}
+.email{
+    color: rgb(200, 153, 35);
+}
+.footer-link{
+    color:#fff;
+}
+
+.footer__links{
+    width: 100%;
+    color:#fff;
+    background-color: rgb(202, 154, 44);
+   
+   
+}
+
+.footer-navigation__item{
+    display: inline;
+    padding:2rem 1rem;
+}
+.footer-nav{
+    padding: .8rem;
+}
+.footer-link{
+    /* display: inline-block; */
+    font-weight: 700;
+    padding: 2rem .5rem;
+    color: #fff!important;
+    text-decoration: none;
+    font-size: 1.7rem;
+    border: 1px solid transparent;
+}
+.footer__sub{
+    width: 100%;
+    background-color: rgb(20, 45, 86);
+    padding: 2rem 1rem;
+
+}
+.footersub-link{
+   display: inline;
+   padding: .6rem 1rem;
+   color: #fff; 
+   border-right: 1px solid #fff;
+}
+
+.Copyright{
+    color: #fff; 
 }
