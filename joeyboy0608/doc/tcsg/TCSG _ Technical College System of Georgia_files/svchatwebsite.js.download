@@ -1,0 +1,573 @@
+(function ( $ ) {
+
+	$.fn.svChat = function ( options ) {
+		var settings = $.extend({
+			inst_short_name: '', 
+			is_default_css: true,
+			queues:{},
+			doActionBeforeShowChat: function(){
+				return true;
+			}
+			
+		}, options);
+		var q, topicContent;
+		var caller = {};
+		var chatServerUrl = 'https://chat.edusupportcenter.com';
+		var _this = this;
+		var chat_session_id;
+		var socket;
+		var isOpen;
+		var chatReconnectTimeout;
+		$.fn.setQueue = function ( queue ) {
+			/*
+			 *  set queues
+			 */
+			
+			/*var queues = settings.queues;
+			for(var index in queues) {
+				if(queues[index] == queue){
+					q = queues[index];
+					return true;
+				}
+			}
+			return false;*/
+			q = queue;
+			sessionStorage.setItem('queueId',q);
+		}
+		
+		$.fn.setTopicContent = function(topic_content){
+			topicContent = topic_content;
+			sessionStorage.setItem('topicContent',topicContent);
+		}
+		
+		$.fn.getQueue = function ( ) {
+			/*
+			 *  set queues
+			 */
+			
+			return q;
+		}
+		
+		$.fn.setCaller = function ( callerInfo ) {
+			/*
+			 *  set caller info
+			 */
+			caller = callerInfo;
+		}
+		function loadCss(url) {
+			var link = document.createElement('link');
+			link.type = 'text/css';
+			link.rel = 'stylesheet';
+			link.href = url;
+			document.getElementsByTagName("head")[0].appendChild(link);
+		}
+
+		function registerChatWindow(){
+			
+			if($('#smartChat').length && $('#smartChat').length>0){
+			      return;     
+			   }
+			_this.append('<div id="smartChat" class="chatIcon"></div>');
+			var chatWindowHtml = '<div id="smartchatWindow" class="smartchatWindow popup-box " style="height:100%;width:100%;right: 0px;opacity: 1;">'+
+				'<div id="maskWebsite">' +
+					'<div id="closeWebsiteBody">' +
+					'<strong>Please close the browser tab/window.</strong>' +
+					'</div>' +
+				'</div>' +
+				'<div class="websiteChatHeader">' +
+					'<span class="headerContent popup-head-left">'+settings.i18n.msg['chat.svchatplugin.welcome']+'</span>' +
+					'<a class="closeChat popup-head-right mr10" id="closeChat" style="color: #a9a9a9; float:right;">✕</a>' +
+				'</div>' +
+				'<div  id="refreshContent" class="refreshContent" style="display:none"><i id="contentList" class="fc fc-spinner fc-spin fc-4x"></i></div>'+
+				'<div class="chatContentWebsite"><div id="chatContentWebsiteID"></div></div>'+
+				'<div class="typeTip">'+
+				'<span class="typing_loader"></span>'+
+				'</div>'+
+				'<div class="panel-footer-websiteChat">'+
+			    '<div class="input-group mb0">'+
+			      '<input class="form-control noshade chatInput" placeholder="'+settings.i18n.msg['chat.svchatplugin.typehere']+'" type="text" onclick="this.select()">'+
+			      '<div class="input-group-btn">'+
+			        '<button id="sendMsg" type="button" class="btn btn-send fa fa-mail-reply f15" title="'+settings.i18n.msg['chat.svchatplugin.sendMessage']+'"></button>'+
+			      '</div>'+
+			    '</div>'+
+			  '</div>'+
+				'<div id="status" class="status_bar popup-bottom">'+
+				'</div>'+
+				'<bgsound id="bg_sound">'+
+			  '</div>';
+			_this.after(chatWindowHtml);
+			
+			$("#smartChat").click(function(){
+				var isShow = settings.doActionBeforeShowChat();
+				if(isShow){
+					_this.showChat();	
+				}
+			});
+			
+		}
+		registerChatWindow();
+		
+		function getInstName() {
+			/*
+			 *  show chat
+			 */
+			return '';
+		}
+		function initESAPI(){
+			Base.esapi.properties.application.Name = "Chat application";
+		    // Initialize the api
+		    org.owasp.esapi.ESAPI.initialize();
+		}
+		$.fn.showChat = function() {
+			/*
+			 *  show chat 
+			 */
+			jsonp(chatServerUrl+'/chat/connected', null, function(time){
+				chatReconnectTimeout = time;
+				if($('#smartchatWindow').css("visibility") == 'visible'){
+					return;
+				}
+				if(checkCookie()){
+					return;
+				}
+				socket = io.connect(chatServerUrl);
+				clearMsg();
+				isOpen = true;
+				sessionStorage.removeItem('isOpen');
+				setCookie('isOpened','true');
+				$('#smartchatWindow').css("visibility", "visible");
+				var reconnectTime;
+				var flag = false;
+				var typing = false;
+				var lastTypingTime;
+				var typingTimeLength = 3 * 1000;
+				var obj = {
+					caller: caller,
+					queue_id: q,
+					inst_short_name: settings.inst_short_name,
+					topicContent: topicContent
+				};
+				var chatObj = {
+					queue_id: sessionStorage.getItem('queueId'),
+					sessionId: sessionStorage.getItem('chatSessionId'),
+					system_data: sessionStorage.getItem('system_data'),
+					topic_content_data: sessionStorage.getItem('topic_content_data'),
+					inst_short_name: settings.inst_short_name
+				};
+				if(sessionStorage.getItem('isOffHours')){
+					var offHoursMessage = sessionStorage.getItem('hourChatMessage').replace(/<[^>]+>/g,"");
+					var data = {
+							message: offHoursMessage,
+							time: new Date().getTime(),
+							author: 'System'
+						};
+					addMessageToChatContent(data);
+					$('.chatInput').attr('disabled',true);
+				}else{
+					if(sessionStorage.getItem('refreshPage')){
+						if(chatObj.system_data){
+							if(chatObj.topic_content_data){
+								addMessageToChatContent(JSON.parse(chatObj.topic_content_data));
+							}
+							addMessageToChatContent(JSON.parse(chatObj.system_data));
+							$('.chatInput').attr('disabled',true);
+							if(sessionStorage.getItem('showEndMsg')){
+								showEndMsg();
+							}
+						}else if(chatObj.sessionId){
+							chat_session_id = chatObj.sessionId;
+							socket.emit('reconnectChat', chatObj);
+						}
+						sessionStorage.removeItem('refreshPage');
+					}else{
+						socket.emit('startChatForUser', obj);
+					}
+				}
+				socket.on('advisor_accept', function(data){
+					$('.chatInput').attr('disabled',false);
+					data.message = checkUrl(data.message);
+					chat_session_id = data.chat_session_id;
+					sessionStorage.setItem('queueId',data.queueId);
+					addMessageToChatContent(data);
+			    	sessionStorage.removeItem('isWaiting');
+			    	msgSound();
+					// $('.headerContent').text('Welcome to ' + data.inst_name);
+					// $('.statusBar').text('You are chatting with ' + data.advisor_first_name + data.advisor_last_name);
+				});
+				socket.on('offline_accept', function(data){
+					$('.chatInput').attr('disabled',false);
+					data.message = checkUrl(data.message);
+					chat_session_id = data.chat_session_id;
+					sessionStorage.setItem('queueId',data.queueId);
+					addMessageToChatContent(data);
+					msgSound();
+				});
+				socket.on('system_message', function(data){
+					data.message = checkUrl(data.message);
+					addMessageToChatContent(data);
+					$('.chatInput').attr('disabled',true);
+					sessionStorage.setItem('system_data',JSON.stringify(data));
+					msgSound();
+				});
+				socket.on('chatbot_accept', function(data){
+					$('.chatInput').attr('disabled',false);
+					data.message = checkUrl(data.message);
+					chat_session_id = data.chat_session_id;
+					sessionStorage.setItem('queueId',q);
+					addMessageToChatContent(data);
+					// $('.headerContent').text('Welcome to ' + data.inst_name);
+					// $('.statusBar').text('You are chatting with ' + data.advisor_first_name + data.advisor_last_name);
+				});
+				socket.on('advisor_message', function(data){
+					$('.chatInput').attr('disabled',false);
+					data.message = checkUrl(data.message);
+					if(data.status == "serverDown"){
+						showEndMsg();
+					}else{
+						addMessageToChatContent(data);
+					}
+					msgSound();
+				});
+				socket.on('chatbot_message', function(data){
+					$('.chatInput').attr('disabled',false);
+					data.message = checkUrl(data.message);
+					addMessageToChatContent(data);
+				});
+				socket.on('user_message', function(data){
+					$('.chatInput').attr('disabled',false);
+					data.message = checkUrl(data.message);
+					addMessageToChatContent(data);
+				});
+				socket.on('return_no_advisor_message', function(data){
+					data.message = checkUrl(data.message);
+					chat_session_id = data.chat_session_id;
+					addMessageToChatContent(data);
+			    	$('.chatInput').attr('disabled',true);
+			    	sessionStorage.setItem('isWaiting',true);
+			    	msgSound();
+						// $('.headerContent').text('Welcome to ' + data.inst_name);
+						// $('.statusBar').text('No advisor chatting with you.');
+				});
+				socket.on('advisor_close', function(data){
+					data.message = checkUrl(data.message);
+					addMessageToChatContent(data);
+			    	$('.chatInput').attr('disabled',true);
+			    	sessionStorage.setItem('isAdvisorClose',true);
+			    	socket.close();
+			    	msgSound();
+				});
+				socket.on('topicContent', function(data){
+					sessionStorage.setItem('topic_content_data',JSON.stringify(data));
+					$('.chatInput').attr('disabled',false);
+					data.message = checkUrl(data.message);
+					addMessageToChatContent(data);
+				});
+				socket.on('history', function(histories){
+					$("#chatContentWebsiteID").empty();
+					$('#refreshContent').show();
+					for(var i=0; i<histories.length; i++){
+						var data = histories[i];
+						if(sessionStorage.getItem('showEndMsg') && i == histories.length - 1){
+							showEndMsg();
+							continue;
+						}
+						data.message = checkUrl(data.message);
+						addMessageToChatContent(data);
+					}
+					$('#refreshContent').hide();
+					if(sessionStorage.getItem('isAdvisorClose')){
+						$('.chatInput').attr('disabled',true);
+						socket.close();
+					}else if(sessionStorage.getItem('isWaiting')){
+						$('.chatInput').attr('disabled',true);
+					}
+				});
+				socket.on('typing', function(){
+					$('.typeTip').show();
+				});
+				socket.on('stopTyping', function(){
+					hideTypeTip();
+				});
+				$('.chatInput').keydown(function(e) {  
+				    if (e.keyCode === 13){
+			            var msg = $(this).val();
+			            if (!msg) {
+			            	return;
+			            }
+			            //confirm send typing event in next input
+			            typing = false;
+			            socket.emit('user_message',{message:msg,chat_session_id:chat_session_id});
+			            $(this).val('');
+			        }
+			   });
+				
+				$("#closeChat").click(function(){
+					socket.emit('user_close');
+					socket.close();
+					isOpen = false;
+					chat_session_id = null;
+					sessionStorage.removeItem('isAdvisorClose');
+					sessionStorage.removeItem('system_data');
+					sessionStorage.removeItem('topic_content_data');
+					sessionStorage.removeItem('chatSessionId');
+					sessionStorage.removeItem('isWaiting');
+					sessionStorage.removeItem('showEndMsg');
+					removeCookie("isOpened");
+					$("#maskWebsite").show();
+				});
+				
+				$('.chatInput').on('input', function(){
+					if(socket.disconnected && !socket.connected){
+						return;
+					}
+			    	updateTyping();
+			    });
+				function updateTyping(){
+					if(!typing){
+						typing = true;
+						socket.emit('typing');
+					}
+					lastTypingTime = new Date().getTime();
+					setTimeout(function(){
+	    	    		 var timeInterval = new Date().getTime() - lastTypingTime;
+	    	    		 if(timeInterval >= typingTimeLength && typing){
+	    	    			 socket.emit('stopTyping');
+	    	    			 typing = false;
+	    	    		 }
+	    	    	}, typingTimeLength);
+				}
+				
+			   window.onbeforeunload = function(){
+				   if(isOpen === true){
+						sessionStorage.setItem('refreshPage',true);
+						sessionStorage.setItem('isOpen',true);
+						sessionStorage.setItem('chatSessionId',chat_session_id);
+						removeCookie("isOpened");
+					}
+				};
+				
+				$("#sendMsg").click(function(){
+					sendMessage();
+				});
+				
+				function sendMessage(){
+					var msg = $('.chatInput').val();
+					if (!msg) {
+		                return;
+		            }			
+					socket.emit('user_message',{message:msg,chat_session_id:chat_session_id});
+				    $('.chatInput').val('');
+				}
+				
+				socket.on('disconnect', function(){
+					//The client should not see the type...
+					$('.chatInput').attr('disabled',true);
+					hideTypeTip();
+				});
+				
+				socket.on('reconnecting', function(attempt){
+					console.log('reconnecting'+attempt);
+					if(attempt == 1){
+						flag = false;
+						reconnectTime = setTimeout(changeFlag, chatReconnectTimeout);
+					}
+					if(attempt >= 3){
+						$('.status_bar').text(settings.i18n.msg['chat.svchatplugin.reconnectingMessage']);
+						setTimeout(clearMsg,10000);
+					}
+				});
+				
+				socket.on('reconnect', function(attempt){
+					if(reconnectTime){
+						clearTimeout(reconnectTime);
+						reconnectTime = null;
+					}
+					$('.chatInput').removeAttr('disabled');
+					chatObj.sessionId = chat_session_id;
+					var queue_id = sessionStorage.getItem('queueId')
+					chatObj.queue_id = queue_id;
+					console.log("reconnect chat..."+attempt);
+					if(!flag){
+						socket.emit('reconnectChatter', chatObj, function(existSession){
+							if(!existSession){
+								changeFlag();
+							}
+						});
+						if(attempt >= 3){
+							$('.status_bar').text(settings.i18n.msg['chat.svchatplugin.connectionMessage']);
+							setTimeout(clearMsg,10000);
+						}
+					}
+				});
+				
+				function addMessageToChatContent(data){
+					if(data.author == 'User'){
+						$('#chatContentWebsiteID').append('<div class="send-msg clearfix"><div class="clearfix"><div class="right"><div class="msg-box"><p>'+
+								data.message+'</p></div><div class="time timeleft small text-muted">'+convertTo12Time(data.time)+'</div></div></div></div>');
+					}else  {
+						$('#chatContentWebsiteID').append('<div class="reply-msg clearfix"><div class="clearfix"><div class="left"><div class="msg-box"><p class="space">'+
+								data.message+'</p></div><div class="time timeright small text-muted">'+convertTo12Time(data.time)+'</div></div></div></div>');
+					}
+					var content = $('#chatContentWebsiteID');
+			    	content.scrollTop(content.prop('scrollHeight'));
+			    	hideTypeTip();
+				}
+				
+				function hideTypeTip(){
+					$('.typeTip').hide();
+				}
+				
+				function clearMsg(){
+					$('.status_bar').text('');
+				}
+				function changeFlag(){
+					flag = true;
+					showEndMsg();
+				}
+				function showEndMsg(){
+					var data = {
+							message: settings.i18n.msg['chat.serverInterruption.message'],
+							time: new Date().getTime(),
+							author: 'System'
+						};
+						addMessageToChatContent(data);
+						sessionStorage.setItem('showEndMsg',true);
+						socket.close();
+				}
+			})
+		}
+		
+		function jsonp(url, data, callback) {
+		    var xhr = $.getJSON(url + '?jsoncallback=?', data, callback);
+
+		    // request failed
+		    xhr.fail(function(jqXHR, textStatus, ex) {
+		        /*
+		         * in ie 8, if service is down (or network occurs an error), the arguments will be:
+		         * 
+		         * testStatus: 'parsererror'
+		         * ex.description: 'xxxx was not called' (xxxx is the name of jsoncallback function)
+		         * ex.message: (same as ex.description)
+		         * ex.name: 'Error'
+		         */
+		    	alert(settings.i18n.msg['chat.svchatplugin.serverconnectivityissue']);
+		    });
+
+		    // ie 8+, chrome and some other browsers
+		    var head = document.head || $('head')[0] || document.documentElement; // code from jquery
+		    var script = $(head).find('script')[0];
+		    script.onerror = function(evt) {
+		    	alert(settings.i18n.msg['chat.svchatplugin.serverconnectivityissue']);
+
+		        // do some clean
+
+		        // delete script node
+		        if (script.parentNode) {
+		            script.parentNode.removeChild(script);
+		        }
+		        // delete jsonCallback global function
+		        var src = script.src || '';
+		        var idx = src.indexOf('jsoncallback=');
+		        if (idx != -1) {
+		            var idx2 = src.indexOf('&');
+		            if (idx2 == -1) {
+		                idx2 = src.length;
+		            }
+		            var jsonCallback = src.substring(idx + 13, idx2);
+		            delete window[jsonCallback];
+		        }
+		    };
+		}
+		
+		function fillZero(v){
+	        if(v<10){v='0'+v;}
+	        return v;
+	    }
+		
+		function convertTo12Time(date,type){
+		    var H,I;
+	        var d=new Date(date);
+	        H=fillZero(d.getHours());
+	        I=fillZero(d.getMinutes());
+	        var time = H+':'+I;
+	        if(H>0 && H<12){
+            	time=time+' AM';
+            }else if(H==12){
+            	time=time+' PM';
+            }
+	        else if(H>12 && H<24){
+                H-=12;
+                H=fillZero(H);
+                time=H+':'+I+' PM';
+            }else if(H==00){
+                H='12';
+                time=H+':'+I+' AM';
+            }
+	        return time;
+		}
+		
+		var mobileBrowser = function(){
+			var u = navigator.userAgent;
+			return !!u.match(/AppleWebKit.*Mobile.*/);
+		}
+		var iPhoneBrowser = function(){
+			var u = navigator.userAgent;
+			return (u.indexOf("iPhone") > -1) || (u.indexOf("iPad") > -1);
+		}
+
+		//add cookie to recognize whether or not chat window already opened.
+		function setCookie(name,value,exdays){
+			var d = new Date();  
+			d.setTime(d.getTime() + (exdays*24*60*60*1000));  
+			var expires = "expires="+d.toUTCString();  
+			document.cookie = name + "=" + value + "; " + expires + "; path=/";
+		}
+		
+		function getCookie(name)
+		{
+			var name = name + "=";
+			var ca = document.cookie.split(';');
+			  for(var i=0; i<ca.length; i++) 
+			  {
+			    var c = ca[i].trim();
+			    if (c.indexOf(name)==0) return c.substring(name.length,c.length);
+			  }
+			return "";
+		}
+		
+		function checkCookie()
+		{
+			var name = getCookie("isOpened");
+			if(name != null && "" != name){
+				alert(settings.i18n.msg['chat.svchatplugin.isOpenedMessage']);
+				return true;
+			}else{
+				return false;
+			}
+		}
+		
+		function removeCookie(name)
+		{ 
+			setCookie(name, '',-1); 
+		}
+		
+		function checkUrl(str) {
+			var msg = $.checkHref(str);
+	    	return msg;
+		}
+		
+		function msgSound() {
+			if (window.ActiveXObject || "ActiveXObject" in window){
+	    		var bg_sound = document.getElementById('bg_sound');
+				bg_sound.src = chatServerUrl+'/chat/voice/userMsg.wav'; 
+	    	}else{
+				var audio = new Audio();
+				audio.setAttribute("src", chatServerUrl+'/chat/voice/userMsg.wav');
+				audio.play();
+	    	}
+		}
+		
+		return this;
+	}
+
+})(jQuery);

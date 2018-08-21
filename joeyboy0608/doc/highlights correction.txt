@@ -1,0 +1,84 @@
+<div class="row">
+                        <div class="col-lg-3 col-md-3 col-sm-6">
+                            <h3 class="gallery-headding">My Highlights</h3>
+                            <img src="img/nat-1.jpg" class="Highlights-img">
+                            <div class="row">
+                                <div class="col-xs-6 Highlights">
+                                    <ul>
+                                        <li><a href-"#">University Profile</a></li>
+                                        <li><a href-"#">Awards & Recognitions</a></li>
+                                        <li><a href-"#">USC Collaboration</a></li>
+                                    </ul>
+                                </div>
+                                <div class="col-xs-6 Highlights">
+                                    <ul>
+                                        <li><a href-"#">Center for Research and Innovation Bulding</li>
+            
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-6">
+                            <h3 class="gallery-headding">Studying @ MY</h3>
+                            <img src="img/nat-1.jpg" class="Highlights-img">
+                            <div class="row">
+                                <div class="col-xs-6 Highlights">
+                                    <ul>
+                                        <li><a href-"#">Current Students</a></li>
+                                        <li><a href-"#">New Students</a></a></li>
+                                        <li><a href-"#">International</a></li>
+                                        <li><a href-"#"><a href-"#">Students</a></li>
+                                    </ul>
+                                </div>
+                                <div class="col-xs-6 Highlights">
+                                    <ul>
+                                        <li><a href-"#">Admission</a></li>
+                                        <li><a href-"#">My Rules and Regulation</a></li>
+                                        <li><a href-"#">Courses</a></li>
+                                        <li><a href-"#">Prospectus</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-6">
+                            <h3 class="gallery-headding">Visitors</h3>
+                            <img src="img/nat-1.jpg" class="Highlights-img">
+                            <div class="row">
+                                <div class="col-xs-6 Highlights">
+                                    <ul>
+                                        <li><a href-"#">Job and vacancies</a></li>
+                                        <li><a href-"#">Transportation</a></li>
+            
+                                    </ul>
+                                </div>
+                                <div class="col-xs-6 Highlights">
+                                    <ul>
+                                        <li><a href-"#">My Maps</a></li>
+                                        <li><a href-"#">Living in MY</a></li>
+            
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-6">
+                            <h3 class="gallery-headding">Online Services</h3>
+                            <img src="img/nat-1.jpg" class="Highlights-img">
+                            <div class="row">
+                                <div class="col-xs-6 Highlights">
+                                    <ul>
+                                        <li><a href-"#">Staff Email</a></li>
+                                        <li><a href-"#">Students Email</a></li>
+                                        <li><a href-"#">HRIS</a></li>
+            
+                                    </ul>
+                                </div>
+                                <div class="col-xs-6 Highlights">
+                                    <ul>
+                                        <li><a href-"#">Elearing</li></li>
+                                        <li><a href-"#">My Portal<a href-"#"></li>
+            
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                </div>

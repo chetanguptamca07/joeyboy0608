@@ -1,0 +1,82 @@
+
+$.extend({
+	
+	  getUrlVars: function(){
+	    var vars = [], hash;
+	    var path = window.location.href;
+	    if ( path.indexOf('#') > -1 )
+	    	path = path.slice(path.indexOf('?')+1, path.indexOf('#') );
+	    else
+	    	path = path.slice(path.indexOf('?')+1);
+	    
+	    var hashes = path.split('&');
+	    
+	    //var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1, window.location.href.indexOf('#')).split('&');
+	    for(var i = 0; i < hashes.length; i++)
+	    {
+	      hash = hashes[i].split('=');
+	      vars.push(hash[0]);
+	      vars[hash[0]] = hash[1];
+	    }
+	    return vars;
+	  },
+	  
+	  getUrlVar: function(name){
+	    return $.getUrlVars()[name];
+	  },
+	  
+	  getUrlBase: function() {
+		  var hname = window.location.hostname;
+		  var protocol = window.location.protocol;
+		  port = window.location.port;
+		  
+		  return protocol+'//' + hname+':'+ port;
+	  },
+	  checkHref: function(str){
+		  var msg;
+		  var matchTheDashAndContent = /\<|\>|"|'/g;
+		  var matchLink = /(https?:[^\s\<\)\>\<\]\>]+|www.[^\s\<\)\>\<\]\>]+)/gim;
+		  var regularMatchingLink = /(https?:[^\s]+)/gim;
+		  var matchLabelAContent = /\[[^\[]*\]\([^\)]*\)/g;
+		  var matchLabelATitle = /\[[^\[]*\]/;
+		  var matchLabelALink = /\([^\)]*\)/;
+		  var matchLabelA = /<a([\s]+|[\s]+[^<>]+[\s]+)href=(\"([^<>"\']*)\"|\'([^<>"\']*)\')[^<>]*>/;
+		  if( str.match( matchTheDashAndContent ) ){
+			  var matchText  = str.match( matchTheDashAndContent );
+			  for( var i in matchText ){
+				  if( typeof( matchText[i])=='string' ){
+					  str = str.replace( matchText[i], $('<span/>').text( matchText[i] ).html());
+				  }
+			  }
+		  }
+		  if( str.match( matchLink ) ){
+			  str = str.replace( matchLink, '<a href="$1" target="_blank">$1</a> ');
+		  }
+		  if( str.match( matchLabelAContent ) ){ 
+			  var matchText = str.match( matchLabelAContent );
+			  for( var i in matchText ){
+				  if( typeof( matchText[i])=='string' && matchText[i].match( matchLabelATitle ) && matchText[i].match( matchLabelALink ) ){
+					  var temptitle = matchText[i].match( matchLabelATitle )[0];
+					  var title = temptitle.substring(1,temptitle.length-1);
+					  var as = '';
+					  if( title.match( matchLabelA ) ){
+						  as = $('<div>').append(title).find('a');
+						  title = as[0].innerHTML; 
+					  }
+					  var templink = matchText[i].match( matchLabelALink )[0];
+					  var link = templink.substring(1,templink.length-1);
+					  if( link.match( matchLabelA )){
+						  as = $('<div>').append(link).find('a');
+						  link = as[0].innerHTML;
+					  }
+					  str = str.replace(matchText[i], '<a target="_blank" href="'+link+'">'+title+'</a>');
+				  }
+			  }
+		  }
+		  msg = str;
+		  return msg;
+	  },
+});
+
+
+

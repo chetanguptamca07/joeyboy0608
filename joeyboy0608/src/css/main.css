@@ -16,7 +16,41 @@ body {
     color: #777;
     box-sizing: border-box;
 }
+/*college-programs*/
+.btn-programs{
+    color:#fff;
+    font-size: 1.5rem;
+    background-color: rgb(255, 117, 16);
+    border-radius: 3px;
+    padding:1.3rem 2.5rem !important;
+    margin-top: 4rem;
+}
+.program-link{
+    color:rgb(255, 117, 16);
+    display: block;
+    font-size: 2rem;
+    font-weight: 500;
+    padding: 2rem 0 1rem 0;
+}
+.program-text{
+    font-size: 1.6rem;
+}
 
+.college-activities{
+    position: relative;
+    text-align: center;
+    color: white;
+}
+.activities-headding{
+    position: absolute;
+    bottom: 1.2rem;
+    left: 3rem;
+}
+.college-activities img{
+    width:100%;
+    padding: 1rem 0;
+   
+}
 /*Achievements*/
 .Achievements{
    background-color: orange;
@@ -46,7 +80,4 @@ body {
 
 .Highlights li{
     list-style: none;
-   
-    
-    
 }

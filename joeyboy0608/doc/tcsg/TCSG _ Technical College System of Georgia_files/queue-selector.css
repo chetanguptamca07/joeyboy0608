@@ -1,0 +1,108 @@
+.page-auth {
+	margin: 0 auto;
+	display: table;
+	width: 100%;
+	height: calc(100% - 46px)
+}
+.page-auth .site-logo {
+	text-align: center
+}
+.page-auth .site-logo>a {
+	color: #565656;
+	font-weight: 100
+}
+.page-auth .site-logo>a>span {
+	font-weight: 800
+}
+.page-auth .auth-container {
+	display: table-cell;
+	vertical-align: middle;
+	padding-top: 10px;
+}
+.page-auth .auth-container .form-container, .page-lock .lock-box, .page-err .err-container .form-container {
+	max-width: 420px;
+	margin: 30px auto
+}
+.height-adjust {
+	height: calc(100% - 54px)
+}
+.light {
+	font-weight:100;
+}
+.main-container {
+	overflow: visible;
+}
+.chatContentWebsite {
+    height: 100%;
+    overflow-y: auto;
+    padding: 36px 0 67px;
+}
+#chatContentWebsiteID {
+    height: 100%;
+    width: 100%;
+    overflow:auto;
+    padding: 0 10px;
+}
+.websiteChatHeader{
+	background-color: #737373;
+	color:white;
+	font-size: 12px;
+	font-weight:bold;
+	height: 36px;
+    padding: 8px;
+    position: absolute;
+    width: 100%;
+	font-family: Open Sans,Segoe UI Light,Helvetica Neue,Helvetica,Arial,sans-serif;
+}
+.websiteChatHeader a:hover {
+	background-color: #737373;
+	text-decoration: none;
+}
+.panel-footer-websiteChat {
+	padding: 8px 15px;
+	border-radius: 0;
+	font-size: 12px;
+	bottom:0px;
+	position:absolute;
+	background-color:#f4f4f4;
+	border-top: 1px solid #d5d5d5;
+	width:100%;
+	height: 67px;
+}
+.panel-footer-websiteChat-sm {
+	font-size: 10px;
+	padding-top: 4px;
+	padding-bottom: 4px
+}
+.required {
+    color: #ff0000;
+}
+#maskWebsite{
+ 	position: fixed;
+ 	z-index:100;
+    background-color: rgba(0,0,0,0.45);
+ 	filter: alpha(opacity=50);
+ 	top:0px;
+	left:0px;
+	bottom:0px;
+	right:0px;
+ 	display:none;
+}
+#closeWebsiteBody{
+	position: fixed;
+	top:35%;
+	left:40%;
+	right:40%;
+	text-align:center;
+	padding-top:3%;
+	padding-bottom:3%;
+	background-color: white;
+	font-size: 14px;
+}
+#site-foot {
+    position: fixed;
+}
+#site-head {
+	 position: fixed;
+	 width: 100%;
+}

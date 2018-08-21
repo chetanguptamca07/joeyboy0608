@@ -1,0 +1,36 @@
+.webChatlabel {
+	font-weight: bold;
+}
+@media (max-width: 419px) {
+		#chatPrivacy {
+		max-width: 290px;
+	}
+}
+@media (min-width: 420px) and (max-width: 449px){
+		#chatPrivacy {
+		max-width: 380px;
+	}
+
+}
+@media (min-width: 450px){
+		#chatPrivacy {
+		max-width: 420px;
+	}
+
+}
+@media (max-width: 344px) {
+		#chatBtnDiv {
+		margin-bottom: 70px;
+	}
+}
+@media (min-width: 345px) and (max-width: 766px) {
+		#chatBtnDiv {
+		margin-bottom: 50px;
+	}
+
+}
+@media (min-width: 767px) {
+	#chatBtnDiv {
+		margin-bottom: 30px;
+	}
+}

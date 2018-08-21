@@ -1,0 +1,72 @@
+var svWebChatModule = angular.module('svWebChat', ['ngRoute', 'ui.bootstrap', 'xeditable', 'ngSanitize']);
+
+svWebChatModule.controller('websiteChatCtrl', [ '$scope', '$sce', '$filter','$interval','$uibModal', function ($scope, $sce, $filter,$interval,$uibModal) {	 
+document.title = i18n.msg['chat.selectQueue.header'];
+	 jQuery(document).ready(function () {
+		$scope.header=i18n.msg['chat.selectQueue.header'];
+		$scope.i18n = i18n;
+		$scope.selectChatQueue = null;
+		$scope.topicContent = null;
+		$scope.chatterInfo = $("#chatterInfo").val();
+        $scope.chatterInfo = JSON.parse($scope.chatterInfo);
+        $scope.privacyStatement =  $("#privacyStatement").val();
+        var queue_id = $scope.chatterInfo.queue_id;
+        var chatMessage = $scope.chatterInfo.chatMessage;
+        var isChatOfficeTime = $scope.chatterInfo.isChatOfficeTime;
+        
+        var chat = $("body").svChat(
+            {
+                inst_short_name: $scope.chatterInfo.inst_short_name,
+                i18n : i18n
+            }
+        );
+       
+        chat.setCaller($scope.chatterInfo.user_info);
+        if(isChatOfficeTime){
+        	sessionStorage.removeItem('isOffHours');
+			sessionStorage.removeItem('hourChatMessage');
+        	if((sessionStorage.getItem('isOpen'))){
+        		var checkSocketIo = $interval(function(){
+        			if(typeof io != 'undefined'){
+        				chat.showChat();
+        				$interval.cancel(checkSocketIo); 
+        				checkSocketIo = null;
+        			}
+        		},200);
+        	}else if ($scope.chatterInfo.queues && $scope.chatterInfo.queues.length > 0) {
+            	$scope.ifNeedSelectQueue = true;
+            	$scope.queues = $scope.chatterInfo.queues;
+            	if($scope.chatterInfo.queues.length == 1){
+            		$scope.selectChatQueue = $scope.chatterInfo.queues[0].queueId;
+            	}
+            }else{
+                chat.showChat();
+                $scope.ifNeedSelectQueue = false;
+            }
+        }else{
+        	sessionStorage.setItem('isOffHours',true);
+    		sessionStorage.setItem('hourChatMessage',chatMessage);
+        	chat.showChat();
+        }
+        $scope.$apply();
+
+    });
+	 $scope.trustValue = function(str) {
+			return $sce.trustAsHtml(str);
+		};
+		
+    $scope.ok = function(selectChatQueue) {
+    	$scope.ifNeedSelectQueue = false;
+    	var chat = $("body").svChat(
+                {
+                    inst_short_name: $scope.chatterInfo.inst_short_name,
+                    i18n : i18n
+                }
+            );
+    	chat.setCaller($scope.chatterInfo.user_info);
+    	chat.setQueue($scope.selectChatQueue);
+    	chat.setTopicContent($scope.topicContent);
+    	chat.showChat();
+    };
+    
+}]);
