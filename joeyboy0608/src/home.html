@@ -5,122 +5,583 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:300' rel='stylesheet' type='text/css'>
+	<link href='https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css' rel='stylesheet' type='text/css'> -->
+
+
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="./css/home.css">
+    <link rel="stylesheet" href="./css/menu.css">
     <title>MY University</title>
 </head>
+<script>
+    function animate(val) {
+        $('#' + val).each(function () {
+            $(this).prop('Counter', 0).animate({
+                Counter: $(this).text()
+            }, {
+                duration: 4000,
+                easing: 'swing',
+                step: function (now) {
+                    console.log(now);
+                    $(this).text(Math.ceil(now));
+                }
+            });
+        });
+    }
+    $(document).ready(function () {
+        animate('num_one');
+        animate('num_two');
+        animate('num_three');
+        animate('num_four');
+    });
+
+    $(document).ready(function () {
+        "use strict";
+        $('.menu > ul > li:has( > ul)').addClass('menu-dropdown-icon');
+        $('.menu > ul > li > ul:not(:has(ul))').addClass('normal-sub');
+        $(".menu > ul").before("<a href=\"#\" class=\"menu-mobile\">&nbsp;</a>");
+        $(".menu > ul > li").hover(function (e) {
+            if ($(window).width() > 943) {
+                $(this).children("ul").stop(true, false).fadeToggle(150);
+                e.preventDefault();
+            }
+        });
+        $(".menu > ul > li").click(function () {
+            if ($(window).width() <= 943) {
+                $(this).children("ul").fadeToggle(150);
+            }
+        });
+        $(".menu-mobile").click(function (e) {
+            $(".menu > ul").toggleClass('show-on-mobile');
+            e.preventDefault();
+        });
+    });
+    $(window).resize(function () {
+        $(".menu > ul > li").children("ul").hide();
+        $(".menu > ul").removeClass('show-on-mobile');
+    });
+</script>
 
 <body>
-      
-        <nav class="navbar navbar-default ">
-                <div class="container-fluid">
-                  <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                      <span class="icon-bar"></span>
-                      <span class="icon-bar"></span>
-                      <span class="icon-bar"></span>                        
-                    </button>
-                    <div class="logo-box_nav">
-                            <img src="./img/logo/llogo.png" alt="MY University" class="logo">
-                        </div>
-            
-                  </div>
-                  <div class="collapse navbar-collapse" id="myNavbar">
-                    <ul class="nav navbar-nav">
-                            <li class="">
-                                    <a class="navigation__link_nav" href="about">About</a>
-                                </li>
-                                <li class="">
-                                    <a class="navigation__link_nav" href="admission">admission</a>
-                                </li>
-                                <li class="">
-                                    <a class="navigation__link_nav" href="academic">Academic</a>
-                                </li>
-                                <li class="">
-                                    <a class="navigation__link_nav" href="research">Research</a>
-                                </li>
-                                <li class="">
-                                    <a class="navigation__link_nav" href="student-life">Student life</a>
-                                </li>
-                                <li class="">
-                                    <a class="navigation__link_nav" href="international">International</a>
-                                </li>
-    
-                    </ul>
 
-                  </div>
+    <section class="mobile-header">
+        <div class="search-box">
+            <input type="text" name="Login" id="login" class="search" placeholder="Search">
+            <i class="fa fa-search search-icon" aria-hidden="true"></i>
+        </div>
+        <div class="dropdown">
+            <select class="quick-links">
+                <option value="Quick links">
+                    <a href="#">Quick links</a>
+                </option>
+                <option value="Faculty & Staff">
+                    <a>Faculty & Staff</a>
+                </option>
+                <option value="Students">
+                    <a href="#">Students</a>
+                </option>
+                <option value=">Visitors">
+                    <a href="#">Visitors</a</option>
+                        <option value="Alumni">
+                            <a href="#">Alumni</a>
+                        </option>
+                        <option value="Mymy">
+                            <a href="#">Mymy</a>
+                        </option>
+                        <option value="Directory">
+                            <a href="#">Directory</a>
+                        </option>
+            </select>
+
+        </div>
+
+    </section>
+
+    <div class="menu-container">
+        <div class="navigation-menu-sub">
+            <ul class="navigation__list">
+                <li class="navigation__item">
+                    <a class="navigation__link nav-sub-link" href="about">Faculty & Staff</a>
+                </li>
+                <li class="navigation__item">
+                    <a class="navigation__link nav-sub-link" href="admission">Students</a>
+                </li>
+                <li class="navigation__item">
+                    <a class="navigation__link nav-sub-link" href="academic">Visitors</a>
+                </li>
+                <li class="navigation__item">
+                    <a class="navigation__link nav-sub-link" href="research">Alumni</a>
+                </li>
+                <li class="navigation__item">
+                    <a class="navigation__link nav-sub-link" href="student-life">myMY</a>
+                </li>
+                <li class="navigation__item">
+                    <a class="navigation__link nav-sub-link" href="international">Directory</a>
+                </li>
+                <li class="navigation__item">
+                    <a class="navigation__link nav-sub-link">
+                        <strong>Login</strong>
+                    </a>
+                    <div class="search-box">
+                        <input type="text" name="Login" id="login" class="search">
+                        <i class="fa fa-search search-icon" aria-hidden="true"></i>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="menu">
+            <a href="#" class="logo">
+                <img src="./img/logo/llogo.png" alt="MY University" class="logo-img">
+            </a>
+            <ul class="clearfix">
+                <li>
+                    <a href="#">International</a>
+                    <ul>
+                        <li>
+                            <a href="#">School</a>
+                            <ul>
+                                <li>
+                                    <a href="#">Lidership</a>
+                                </li>
+                                <li>
+                                    <a href="#">History</a>
+                                </li>
+                                <li>
+                                    <a href="#">Locations</a>
+                                </li>
+                                <li>
+                                    <a href="#">Careers</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li>
+                            <a href="#">Empty sub</a>
+                            <ul>
+                                <li>
+                                    <img src="https://placeimg.com/300/200/people">
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">Student life</a>
+
+                    <ul>
+                        <li>
+                            <a href="#">School</a>
+                            <ul>
+                                <li>
+                                    <a href="#">Lidership</a>
+                                </li>
+                                <li>
+                                    <a href="#">History</a>
+                                </li>
+                                <li>
+                                    <a href="#">Locations</a>
+                                </li>
+                                <li>
+                                    <a href="#">Careers</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li>
+                            <a href="#">Empty sub</a>
+                            <ul>
+                                <li>
+                                    <img src="https://placeimg.com/300/200/people">
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <ul>
+                        <li>
+                            <a href="#">School</a>
+                            <ul>
+                                <li>
+                                    <a href="#">Lidership</a>
+                                </li>
+                                <li>
+                                    <a href="#">History</a>
+                                </li>
+                                <li>
+                                    <a href="#">Locations</a>
+                                </li>
+                                <li>
+                                    <a href="#">Careers</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#">Study</a>
+                            <ul>
+                                <li>
+                                    <a href="#">Undergraduate</a>
+                                </li>
+                                <li>
+                                    <a href="#">Masters</a>
+                                </li>
+                                <li>
+                                    <a href="#">International</a>
+                                </li>
+                                <li>
+                                    <a href="#">Online</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#">Research</a>
+                            <ul>
+                                <li>
+                                    <a href="#">Undergraduate research</a>
+                                </li>
+                                <li>
+                                    <a href="#">Masters research</a>
+                                </li>
+                                <li>
+                                    <a href="#">Funding</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#">Something</a>
+                            <ul>
+                                <li>
+                                    <img src="https://placeimg.com/300/200/nature">
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">Research</a>
+                    <ul>
+                        <li>
+                            <a href="#">Today</a>
+                        </li>
+                        <li>
+                            <a href="#">Calendar</a>
+                        </li>
+                        <li>
+                            <a href="#">Sport</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">Academic</a>
+                    <ul>
+                        <li>
+                            <a href="#">School</a>
+                            <ul>
+                                <li>
+                                    <a href="#">Lidership</a>
+                                </li>
+                                <li>
+                                    <a href="#">History</a>
+                                </li>
+                                <li>
+                                    <a href="#">Locations</a>
+                                </li>
+                                <li>
+                                    <a href="#">Careers</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#">Study</a>
+                            <ul>
+                                <li>
+                                    <a href="#">Undergraduate</a>
+                                </li>
+                                <li>
+                                    <a href="#">Masters</a>
+                                </li>
+                                <li>
+                                    <a href="#">International</a>
+                                </li>
+                                <li>
+                                    <a href="#">Online</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#">Empty sub</a>
+                            <ul>
+                                <li>
+                                    <img src="https://placeimg.com/300/200/people">
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">Admission</a>
+                    <ul>
+                        <li>
+                            <a href="#">School</a>
+                            <ul>
+                                <li>
+                                    <a href="#">Lidership</a>
+                                </li>
+                                <li>
+                                    <a href="#">History</a>
+                                </li>
+                                <li>
+                                    <a href="#">Locations</a>
+                                </li>
+                                <li>
+                                    <a href="#">Careers</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#">Study</a>
+                            <ul>
+                                <li>
+                                    <a href="#">Undergraduate</a>
+                                </li>
+                                <li>
+                                    <a href="#">Masters</a>
+                                </li>
+                                <li>
+                                    <a href="#">International</a>
+                                </li>
+                                <li>
+                                    <a href="#">Online</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#">Study</a>
+                            <ul>
+                                <li>
+                                    <a href="#">Undergraduate</a>
+                                </li>
+                                <li>
+                                    <a href="#">Masters</a>
+                                </li>
+                                <li>
+                                    <a href="#">International</a>
+                                </li>
+                                <li>
+                                    <a href="#">Online</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#">Empty sub</a>
+                            <ul>
+                                <li>
+                                    <img src="https://placeimg.com/300/200/people">
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">About</a>
+                    <ul>
+                        <li>
+                            <a href="#">School</a>
+                            <ul>
+                                <li>
+                                    <a href="#">Lidership</a>
+                                </li>
+                                <li>
+                                    <a href="#">History</a>
+                                </li>
+                                <li>
+                                    <a href="#">Locations</a>
+                                </li>
+                                <li>
+                                    <a href="#">Careers</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#">Study</a>
+                            <ul>
+                                <li>
+                                    <a href="#">Undergraduate</a>
+                                </li>
+                                <li>
+                                    <a href="#">Masters</a>
+                                </li>
+                                <li>
+                                    <a href="#">International</a>
+                                </li>
+                                <li>
+                                    <a href="#">Online</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#">Study</a>
+                            <ul>
+                                <li>
+                                    <a href="#">Undergraduate</a>
+                                </li>
+                                <li>
+                                    <a href="#">Masters</a>
+                                </li>
+                                <li>
+                                    <a href="#">International</a>
+                                </li>
+                                <li>
+                                    <a href="#">Online</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#">Empty sub</a>
+                            <ul>
+                                <li>
+                                    <img src="https://placeimg.com/300/200/people">
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+    <!-- <nav class="navbar navbar-default ">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <div class="logo-box_nav">
+                    <img src="./img/logo/llogo.png" alt="MY University" class="logo">
                 </div>
-              </nav>
+
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav">
+                    <li class="">
+                        <a class="navigation__link_nav" href="about">About</a>
+                    </li>
+                    <li class="">
+                        <a class="navigation__link_nav" href="admission">admission</a>
+                    </li>
+                    <li class="">
+                        <a class="navigation__link_nav" href="academic">Academic</a>
+                    </li>
+                    <li class="">
+                        <a class="navigation__link_nav" href="research">Research</a>
+                    </li>
+                    <li class="">
+                        <a class="navigation__link_nav" href="student-life">Student life</a>
+                    </li>
+                    <li class="">
+                        <a class="navigation__link_nav" href="international">International</a>
+                    </li>
+
+                </ul>
+
+            </div>
+        </div>
+    </nav> -->
 
     <!-- Logo and navigation -->
-    <header class="header">
-        <div class="container">
-                <div class="logo-box">
-                        <img src="./img/logo/llogo.png" alt="MY University" class="logo">
-                    </div>
-                            
-                          
-                    <div class="navigation">
-                        <ul class="navigation__list">
-                            <li class="navigation__item">
-                                <a class="navigation__link" href="about">About</a>
-                            </li>
-                            <li class="navigation__item">
-                                <a class="navigation__link" href="admission">admission</a>
-                            </li>
-                            <li class="navigation__item">
-                                <a class="navigation__link" href="academic">Academic</a>
-                            </li>
-                            <li class="navigation__item">
-                                <a class="navigation__link" href="research">Research</a>
-                            </li>
-                            <li class="navigation__item">
-                                <a class="navigation__link" href="student-life">Student life</a>
-                            </li>
-                            <li class="navigation__item">
-                                <a class="navigation__link" href="international">International</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="navigation-menu-sub">
-                        <ul class="navigation__list">
-                            <li class="navigation__item">
-                                <a class="navigation__link nav-sub-link" href="about">Faculty & Staff</a>
-                            </li>
-                            <li class="navigation__item">
-                                <a class="navigation__link nav-sub-link" href="admission">Students</a>
-                            </li>
-                            <li class="navigation__item">
-                                <a class="navigation__link nav-sub-link" href="academic">Visitors</a>
-                            </li>
-                            <li class="navigation__item">
-                                <a class="navigation__link nav-sub-link" href="research">Alumni</a>
-                            </li>
-                            <li class="navigation__item">
-                                <a class="navigation__link nav-sub-link" href="student-life">myMY</a>
-                            </li>
-                            <li class="navigation__item">
-                                <a class="navigation__link nav-sub-link" href="international">Directory</a>
-                            </li>
-                            <li class="navigation__item">
-                                <a class="navigation__link nav-sub-link">
-                                    <strong>Login</strong>
-                                </a>
-                                <div class="search-box">
-                                    <input type="text" name="Login" id="login" class="search">
-                                    <i class="fa fa-search search-icon" aria-hidden="true"></i>
+    <main>
+
+
+
+        <!-- banner -->
+        <div class="banner">
+            <div class="container-fluid">
+                <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                    <!-- Indicators -->
+                    <ol class="carousel-indicators">
+                        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                        <li data-target="#myCarousel" data-slide-to="1"></li>
+                        <li data-target="#myCarousel" data-slide-to="2"></li>
+                    </ol>
+
+                    <!-- Wrapper for slides -->
+                    <div class="carousel-inner">
+
+                        <div class="item active">
+                            <div class="carousel-caption banner-img-box">
+                                <div class="banner__text-box">
+                                    <span class="banner__text-primary">
+                                        Are you looking for more?
+                                    </span>
+                                    <span class="banner__text-sub">
+                                        <strong class="highlight">More</strong> job satisfaction
+                                        <strong class="highlight">higher</strong> pay,
+                                        <br> a
+                                        <strong class="highlight">meaningful</strong> career?
+                                    </span>
+                                    <a href="#" class="btn btn-white">Get Started</a>
                                 </div>
-                            </li>
-                        </ul>
+                            </div>
+                            <img class="banner-img" src="./img/college1.jpeg" alt="Los Angeles" style="width:100%;">
+                        </div>
+
+                        <div class="item">
+                            <img class="banner-img" src="./img/college2.jpeg" alt="Chicago" style="width:100%;">
+                            <div class="carousel-caption">
+                                <div class="banner__text-box">
+                                    <span class="banner__text-primary">
+                                        Register Today!
+                                    </span>
+                                    <span class="banner__text-sub">
+                                        <strong class="highlight">Registration</strong> is open for
+                                        <strong class="highlight">Students</strong>
+                                    </span>
+                                    <a href="#" class="btn btn-white">Learn More</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="item">
+                            <img class="banner-img" src="./img/college3.jpeg" alt="New York" style="width:100%;">
+                            <div class="carousel-caption">
+                                <div class="banner__text-box">
+                                    <span class="banner__text-primary">
+                                        Discover What's Next!
+                                    </span>
+                                    <span class="banner__text-sub">
+                                        <strong class="highlight">Fall Semester </strong> Begins
+                                        <strong class="highlight">August 20</strong>
+                                    </span>
+                                    <a href="#" class="btn btn-white">Learn More</a>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
+
+                    <!-- Left and right controls -->
+                    <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+                        <span class="glyphicon glyphicon-chevron-left"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="right carousel-control" href="#myCarousel" data-slide="next">
+                        <span class="glyphicon glyphicon-chevron-right"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+            </div>
         </div>
-       
-    </header>
-    <!-- banner -->
-    <div class="banner fluid-container">
-        <div class="banner__text-box">
+
+        <!-- <div class="banner__text-box">
             <span class="banner__text-primary">
                 Are you looking for more?
             </span>
@@ -131,403 +592,459 @@
                 <strong class="highlight">meaningful</strong> career?
             </span>
             <a href="#" class="btn btn-white">Get Started</a>
-        </div>
-    </div>
-    <!-- section feature -->
-    <div class="section-feature">
-        <div class="container">
-            <div class="row">
-                <div class="col-xs-12 col-sm-6 col-md-3 section-feature-box">
-                    <div class="section-feature-heading-main">4000+</div>
-                    <p class="section-feature-heading-sub">Students from
-                        <span> 33 nationality </span></p>
-                </div>
-                <div class="col-xs-12 col-sm-6 col-md-3 section-feature-box">
-                    <div class="section-feature-heading-main">#1 </div>
-                    <p class="section-feature-heading-sub">Private Medical
-                        <span>college in Oman</span> </p>
-                </div>
-                <div class="col-xs-12 col-sm-6 col-md-3 section-feature-box">
-                    <div class="section-feature-heading-main">#1 </div>
-                    <p class="section-feature-heading-sub">Private Engineering
-                        <span>College in Oman</span> </p>
-                </div>
-                <div class="col-xs-12 col-sm-6 col-md-3 section-feature-box">
-                    <div class="section-feature-heading-main">22 </div>
-                    <p class="section-feature-heading-sub">Institute in Research
-                        <span>Collaboration around the World</span>
+        </div> -->
+        <!-- section feature -->
+        <div class="section-feature">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6 col-md-3 section-feature-box">
+                        <div class="section-feature-heading-main">#
+                            <span id="num_one">400</span>+</div>
+                        <p class="section-feature-heading-sub">Students from
+                            <span> 33 nationality </span>
                         </p>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-3 section-feature-box">
+                        <div class="section-feature-heading-main">#
+                            <span id="num_two">10</span>
+                        </div>
+                        <p class="section-feature-heading-sub">Private Medical
+                            <span>college in Oman</span>
+                        </p>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-3 section-feature-box">
+                        <div class="section-feature-heading-main">#
+                            <span id="num_three">100</span>
+                        </div>
+                        <p class="section-feature-heading-sub">Private Engineering
+                            <span>College in Oman</span>
+                        </p>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-3 section-feature-box">
+                        <div class="section-feature-heading-main">#
+                            <span id="num_four">20</span>
+                        </div>
+                        <p class="section-feature-heading-sub">Institute in Research
+                            <span>Collaboration around the World</span>
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- Section about -->
-    <div class="about">
-        <div class="container">
-            <div class="row">
-                <div class="col-xs-12 col-sm-6 college-info">
-                    <span class="college-info-heading">
-                        MY University
-                        <br>Your School of Today and
-                        <br>the future to come
-                    </span>
-                    <a href="#" class="btn btn-yellow">Our Campuses</a>
-                    <a href="#" class="btn btn-blue">Photo Galleries</a>
-                </div>
+        <!-- Section about -->
+        <div class="about">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6 college-info">
+                        <span class="college-info-heading">
+                            MY University
+                            <br>Your School of Today and
+                            <br>the future to come
+                        </span>
+                        <a href="#" class="btn btn-yellow">Our Campuses</a>
+                        <a href="#" class="btn btn-blue">Photo Galleries</a>
+                    </div>
 
-                <div class="col-xs-12 col-sm-6 college-events">
-                    <ul class="nav nav-pills" role="tablist">
-                        <li role="presentation" class="college-events-tab active">
-                            <a href="#news" aria-controls="1" role="tab" data-toggle="tab">News</a>
-                        </li>
-                        <li role="presentation" class="college-events-tab">
-                            <a href="#event" aria-controls="2" role="tab" data-toggle="tab">Event</a>
-                        </li>
-                    </ul>
-                    <!-- Tab panes -->
-                    <div class="tab-content">
-                        <div role="tabpanel" class="tab-pane  fade in active" id="news">
-                            <div class="college-events-text">
-                                Education council approvedthe formation of MY University
-                            </div>
-                            <div class="college-events-text">
-                                Minitrial Decision for establishing the University (No 19/2018) issued
-                            </div>
-
-                            <div class="college-events-text">
-                                Conduct of the 1st Press Conference of MY University
-                            </div>
-                            <div class="college-events-text">
-                                    Conduct of the 1st Press Conference of MY University
+                    <div class="col-xs-12 col-sm-6 college-events">
+                        <ul class="nav nav-pills" role="tablist">
+                            <li role="presentation" class="college-events-tab active">
+                                <a href="#news" aria-controls="1" role="tab" data-toggle="tab">News</a>
+                            </li>
+                            <li role="presentation" class="college-events-tab">
+                                <a href="#event" aria-controls="2" role="tab" data-toggle="tab">Event</a>
+                            </li>
+                        </ul>
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane  fade in active" id="news">
+                                <div class="college-events-text">
+                                    <a href="#"> Education council approvedthe formation of MY University</a>
                                 </div>
-                            </div>
-                        <div role="tabpanel" class="tab-pane" id="event">
-                            <div class="college-events-text">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                            </div>
-                            <div class="college-events-text">
-                                Cupiditate maxime optio eveniet ab ea tempora deleniti reprehenderit </div>
+                                <div class="college-events-text">
+                                    <a href="#">Minitrial Decision for establishing the University (No 19/2018) issued</a>
+                                </div>
 
                                 <div class="college-events-text">
-                                        quae error vero nam dolorem amet
-                                    </div>
-                                    <div class="college-events-text">
-                                            quae error vero nam dolorem amet
-                                        </div>
-                                            </div>
-                    </div>
-                    <!-- <div role="tabpanel" class="college-events-list tab-pane active" id="news" >
+                                    <a href="#">Conduct of the 1st Press Conference of MY University</a>
+                                </div>
+                                <div class="college-events-text">
+                                    <a>Conduct of the 1st Press Conference of MY University</a>
+                                </div>
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="event">
+                                <div class="college-events-text">
+                                    <a href="#">Lorem ipsum dolor sit amet consectetur adipisicing elit.</a>
+                                </div>
+                                <div class="college-events-text">
+                                    <a href="#">Cupiditate maxime optio eveniet ab ea tempora deleniti reprehenderit</a>
+                                </div>
+
+                                <div class="college-events-text">
+                                    <a href="#">quae error vero nam dolorem amet</a>
+                                </div>
+                                <div class="college-events-text">
+                                    <a href="#">quae error vero nam dolorem amet</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div role="tabpanel" class="college-events-list tab-pane active" id="news" >
                         
                     </div>
                     <div role="tabpanel" class="college-events-list tab-pane" id="event" >
                             
                     </div> -->
-                    <a href="#" class="btn btn-grey">View All</a>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-    <!--college-programs-->
-    <section class="college-programs">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <h1 class="program-hedding">College and Programs</h1>
-                    <p class="program-text">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia praesentium, possimus ab quis accusantium facere voluptas et.
-                        Libero perspiciatis fuga quam enim, in optio sequi, sit provident soluta, molestias harum.
-                    </p>
-                    <p class="program-text">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta rerum voluptatibus numquam repellendus obcaecati sit ipsum
-                        distinctio.
-                    </p>
-                    <a href="#" class=" btn btn-programs">See all our programs</a>
-
-                </div>
-                <div class="col-md-6">
-                    <div class="row">
-                        <div class="col-md-6 col-sm-6 college-activities">
-                            <h3 class="activities-headding">College of
-                                <br> Medicine</h3>
-                            <img src="img/download.jpg" alt="">
-                        </div>
-                        <div class="col-md-6 col-sm-6 college-activities">
-                            <h3 class="activities-headding">College of
-                                <br> Engineering</h3>
-                            <img src="img/download.jpg" alt="">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 col-sm-6 college-activities">
-                            <h3 class="activities-headding">College of
-                                <br> Pharmacy</h3>
-                            <img src="img/download.jpg" alt="">
-                        </div>
-                        <div class="col-md-6  col-sm-6 college-activities">
-                            <h3 class="activities-headding">School of
-                                <br> Foundation</h3>
-                            <img src="img/download.jpg" alt="">
-                        </div>
+                        <a href="#" class="btn btn-grey">View All</a>
                     </div>
 
                 </div>
             </div>
         </div>
-    </section>
-    <!-- gallery -->
-    <div class="gallery">
-        <div class="container">
-            <div class="row">
-                <div class="col-xs-12 col-sm-6 col-md-3 image-box">
-                    <h3 class="gallery-headding">My Highlights</h3>
-                    <img src="img/nat-1.jpg" class="Highlights-img">
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-6 Highlights">
-                            <ul class="u-remove-margin-bottom">
-                                    <li><a href-"#">University Profile</a></li>
-                                    <li><a href-"#">Awards & Recognitions</a></li>
-                                    <li><a href-"#">USC Collaboration</a></li>
-                            </ul>
-                        </div>
-                        <div class="col-xs-12 col-sm-6  Highlights">
-                            <ul>
-                                    <li><a href-"#">Center for Research and Innovation Bulding</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-6 col-md-3 image-box">
-                    <h3 class="gallery-headding">Studying @ MY</h3>
-                    <img src="img/nat-1.jpg" class="Highlights-img">
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-6 Highlights">
-                            <ul class="u-remove-margin-bottom">
-                                    <li><a href-"#">Current Students</a></li>
-                                    <li><a href-"#">New Students</a></a></li>
-                                    <li><a href-"#">International</a></li>
-                                    <li><a href-"#"><a href-"#">Students</a></li>
-                            </ul>
-                        </div>
-                        <div class="col-xs-12 col-sm-6 Highlights">
-                            <ul>
-                                    <li><a href-"#">Admission</a></li>
-                                    <li><a href-"#">My Rules and Regulation</a></li>
-                                    <li><a href-"#">Courses</a></li>
-                                    <li><a href-"#">Prospectus</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-6 col-md-3 image-box">
-                    <h3 class="gallery-headding">Visitors</h3>
-                    <img src="img/nat-1.jpg" class="Highlights-img">
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-6  Highlights">
-                            <ul class="u-remove-margin-bottom">
-                                    <li><a href-"#">Job and vacancies</a></li>
-                                    <li><a href-"#">Transportation</a></li>
-                            </ul>
-                        </div>
-                        <div class="col-xs-12 col-sm-6  Highlights">
-                            <ul>
-                                    <li><a href-"#">My Maps</a></li>
-                                    <li><a href-"#">Living in MY</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-6 col-md-3 image-box">
-                    <h3 class="gallery-headding">Online Services</h3>
-                    <img src="img/nat-1.jpg" class="Highlights-img">
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-6 Highlights">
-                            <ul class="u-remove-margin-bottom">
-                                    <li><a href-"#">Staff Email</a></li>
-                                    <li><a href-"#">Students Email</a></li>
-                                    <li><a href-"#">HRIS</a></li>
-        
-                            </ul>
-                        </div>
-                        <div class="col-xs-12 col-sm-6 Highlights">
-                            <ul>
-                                    <li><a href-"#">Elearing</li></li>
-                                        <li><a href-"#">My Portal<a href-"#"></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--Apply-Now-->
-    <div class="apply-now">
-        <div class="container">
-            <div class="row">
-                <div class="col-xs-12 col-sm-8 apply-now-textbox">
-                    <div class="apply-now-heading-main">MY University</div>
-                    <div class="apply-now-heading-sub">Your Road to succesfull career</div>
-                </div>
-                <div class="col-xs-12 col-sm-4 apply-now-btn-box">
-                    <a href="#" class="btn-apply">Apply Now</a>
-                </div>
 
-            </div>
-
-        </div>
-    </div>
-    <!--Testimonial-->
-    <section class="testimonials">
-        <div class="container">
-            <div class="row">
-                <div class="col-xs-12 col-md-7 hidden-xs">
-                    <iframe width="100%" height="420" src="https://www.youtube.com/embed/tgbNymZ7vqY">
-                    </iframe>
-                </div>
-                <div class="col-xs-12 col-md-5">
-                    <div id="myCarousel" class="carousel slide" data-ride="carousel">
-                        <!-- Indicators -->
-                        <ol class="carousel-indicators">
-                            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-                            <li data-target="#myCarousel" data-slide-to="1"></li>
-                            <li data-target="#myCarousel" data-slide-to="2"></li>
-                        </ol>
-
-                        <!-- Wrapper for slides -->
-                        <div class="carousel-inner ">
-                            <div class="item active">
-                                <div class="testimonial-box">
-                                    <div class="testimonial-heading">Industrial Testimonials</div>
-                                    <div class="testimonial-image-box">
-                                        <img src="./img/college.jpg" alt="Los Angeles" style="">
-                                    </div>
-                                    <div class="testimonial-author">Hamid Al Maha</div>
-                                    <div class="testimonial-author-desig">Operations, Manager</div>
-                                    <div class="testimonial-author-comp">Al Maha Engineering</div>
-                                    <div class="line-sep"></div>
-                                    <div class="testimonial-text">
-                                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sequi impedit alias adipisci modi ipsum. Dolore repudiandae, possimus,
-                                        ab illo ut.
-                                    </div>
-                                </div>
-
-                            </div>
-
-                            <div class="item">
-                                <div class="testimonial-box">
-                                    <div class="testimonial-heading">Industrial Testimonials</div>
-                                    <div class="testimonial-image-box">
-                                        <img src="./img/college.jpg" alt="Los Angeles" style="">
-                                    </div>
-                                    <div class="testimonial-author">Hamid Al Maha</div>
-                                    <div class="testimonial-author-desig">Operations, Manager</div>
-                                    <div class="testimonial-author-comp">Al Maha Engineering</div>
-                                    <div class="line-sep"></div>
-                                    <div class="testimonial-text">
-                                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sequi impedit alias adipisci modi ipsum. Dolore repudiandae, possimus.
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="item">
-                                <div class="testimonial-box">
-                                    <div class="testimonial-heading">Industrial Testimonials</div>
-                                    <div class="testimonial-image-box">
-                                        <img src="./img/college.jpg" alt="Los Angeles" style="">
-                                    </div>
-                                    <div class="testimonial-author">Hamid Al Maha</div>
-                                    <div class="testimonial-author-desig">Operations, Manager</div>
-                                    <div class="testimonial-author-comp">Al Maha Engineering</div>
-                                    <div class="line-sep"></div>
-                                    <div class="testimonial-text">
-                                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sequi impedit alias adipisci modi ipsum. Dolore repudiandae, possimus.
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Left and right controls -->
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </section>
-
-
-
-    <!-- footer -->
-    <div class="footer">
-        <div class="footer-head">
+        <!--college-programs-->
+        <section class="college-programs">
             <div class="container">
                 <div class="row">
-                    <div class="col-xs-12 col-md-4 footer-college-logo">
-                        <div class="footer-logo-box">
-                            <img src="./img/logo/llogo.png" alt="MY University" class="logo footer-logo">
+                    <div class="col-md-6">
+                        <h1 class="program-hedding">College and Programs</h1>
+                        <p class="program-text">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia praesentium, possimus ab quis accusantium facere voluptas et.
+                            Libero perspiciatis fuga quam enim, in optio sequi, sit provident soluta, molestias harum.
+                        </p>
+                        <p class="program-text">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta rerum voluptatibus numquam repellendus obcaecati sit ipsum
+                            distinctio.
+                        </p>
+                        <a href="#" class=" btn btn-programs">See all our programs</a>
+                        <a href="#" class="program-link">https://www.northpark.edu</a>
 
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6 college-activities">
+                                <h3 class="activities-headding">College of
+                                    <br> Medicine</h3>
+                                <img src="img/download.jpg" alt="">
+                            </div>
+                            <div class="col-md-6 col-sm-6 college-activities">
+                                <h3 class="activities-headding">College of
+                                    <br> Engineering</h3>
+                                <img src="img/download.jpg" alt="">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6 college-activities">
+                                <h3 class="activities-headding">College of
+                                    <br> Pharmacy</h3>
+                                <img src="img/download.jpg" alt="">
+                            </div>
+                            <div class="col-md-6  col-sm-6 college-activities">
+                                <h3 class="activities-headding">School of
+                                    <br> Foundation</h3>
+                                <img src="img/download.jpg" alt="">
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- gallery -->
+        <div class="gallery">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6 col-md-3 image-box">
+                        <h3 class="gallery-headding">My Highlights</h3>
+                        <img src="img/nat-1.jpg" class="Highlights-img">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-6 Highlights">
+                                <ul class="u-remove-margin-bottom">
+                                    <li>
+                                        <a href- "#">University Profile</a>
+                                    </li>
+                                    <li>
+                                        <a href- "#">Awards & Recognitions</a>
+                                    </li>
+                                    <li>
+                                        <a href- "#">USC Collaboration</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-xs-12 col-sm-6  Highlights">
+                                <ul>
+                                    <li>
+                                        <a href- "#">Center for Research and Innovation Bulding</a>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-xs-12 col-md-4 text-center University-address">
-                        <span>
-                            <strong class="strong  ">University headquarters</strong>
-                            <br>
-                            <span class="address"> PO 620, PC 130, Al Dera, Dubai UEA
-                                <br> Tel:+971 12345667, Fax:+971 2223455
-                                <br> Email: </span>
-                            <span class="email">info@my.edu.my</span>
-                        </span>
+                    <div class="col-xs-12 col-sm-6 col-md-3 image-box">
+                        <h3 class="gallery-headding">Studying @ MY</h3>
+                        <img src="img/nat-1.jpg" class="Highlights-img">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-6 Highlights">
+                                <ul class="u-remove-margin-bottom">
+                                    <li>
+                                        <a href- "#">Current Students</a>
+                                    </li>
+                                    <li>
+                                        <a href- "#">New Students</a>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href- "#">International</a>
+                                    </li>
+                                    <li>
+                                        <a href- "#">
+                                            <a href- "#">Students</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 Highlights">
+                                <ul>
+                                    <li>
+                                        <a href- "#">Admission</a>
+                                    </li>
+                                    <li>
+                                        <a href- "#">My Rules and Regulation</a>
+                                    </li>
+                                    <li>
+                                        <a href- "#">Courses</a>
+                                    </li>
+                                    <li>
+                                        <a href- "#">Prospectus</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-xs-12 col-md-4 hidden-xs text-center social-icons">
-                        <i class="fa fa-facebook-square social-icon" style="color:blue"></i>
-                        <i class="fa fa-twitter-square social-icon" style="color:lightblue"></i>
-                        <i class="fa fa-google-plus-square social-icon" style="color:red"></i>
-                        <i class="fa fa-google-plus-square social-icon" style="color:red"></i>
+                    <div class="col-xs-12 col-sm-6 col-md-3 image-box">
+                        <h3 class="gallery-headding">Visitors</h3>
+                        <img src="img/nat-1.jpg" class="Highlights-img">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-6  Highlights">
+                                <ul class="u-remove-margin-bottom">
+                                    <li>
+                                        <a href- "#">Job and vacancies</a>
+                                    </li>
+                                    <li>
+                                        <a href- "#">Transportation</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-xs-12 col-sm-6  Highlights">
+                                <ul>
+                                    <li>
+                                        <a href- "#">My Maps</a>
+                                    </li>
+                                    <li>
+                                        <a href- "#">Living in MY</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-3 image-box">
+                        <h3 class="gallery-headding">Online Services</h3>
+                        <img src="img/nat-1.jpg" class="Highlights-img">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-6 Highlights">
+                                <ul class="u-remove-margin-bottom">
+                                    <li>
+                                        <a href- "#">Staff Email</a>
+                                    </li>
+                                    <li>
+                                        <a href- "#">Students Email</a>
+                                    </li>
+                                    <li>
+                                        <a href- "#">HRIS</a>
+                                    </li>
 
+                                </ul>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 Highlights">
+                                <ul>
+                                    <li>
+                                        <a href- "#">Elearing</li>
+                                    </li>
+                                    <li>
+                                        <a href- "#">My Portal
+                                            <a href- "#">
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
+                </div>
+            </div>
+        </div>
+        <!--Apply-Now-->
+        <div class="apply-now">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-8 apply-now-textbox">
+                        <div class="apply-now-heading-main">MY University</div>
+                        <div class="apply-now-heading-sub">Your Road to succesfull career</div>
+                    </div>
+                    <div class="col-xs-12 col-sm-4 apply-now-btn-box">
+                        <a href="#" class="btn-apply">Apply Now</a>
+                    </div>
+
                 </div>
 
             </div>
         </div>
+        <!--Testimonial-->
+        <section class="testimonials">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12 col-md-7 hidden-xs">
+                        <iframe width="100%" height="420" src="https://www.youtube.com/embed/tgbNymZ7vqY">
+                        </iframe>
+                    </div>
+                    <div class="col-xs-12 col-md-5">
+                        <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                            <!-- Indicators -->
+                            <ol class="carousel-indicators">
+                                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                                <li data-target="#myCarousel" data-slide-to="1"></li>
+                                <li data-target="#myCarousel" data-slide-to="2"></li>
+                            </ol>
 
-        <div class="footer__links text-center">
+                            <!-- Wrapper for slides -->
+                            <div class="carousel-inner ">
+                                <div class="item active">
+                                    <div class="testimonial-box">
+                                        <div class="testimonial-heading">Industrial Testimonials</div>
+                                        <div class="testimonial-image-box">
+                                            <img src="./img/persion1.jpeg" alt="Los Angeles" style="">
+                                        </div>
+                                        <div class="testimonial-author">Hamid Al Maha</div>
+                                        <div class="testimonial-author-desig">Operations, Manager</div>
+                                        <div class="testimonial-author-comp">Al Maha Engineering</div>
+                                        <div class="line-sep"></div>
+                                        <div class="testimonial-text">
+                                            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sequi impedit alias adipisci modi ipsum. Dolore repudiandae, possimus,
+                                            ab illo ut.
+                                        </div>
+                                    </div>
 
-            <div class="footer-nav">
-                <ul class="footer-navigation__list">
-                    <li class="footer-navigation__item">
-                        <a class=" footer-link" href="about">Home</a>
-                    </li>
-                    <li class="footer-navigation__item">
-                        <a class=" footer-link" href="admission">About Us</a>
-                    </li>
-                    <li class="footer-navigation__item">
-                        <a class=" footer-link" href="academic">Admission</a>
-                    </li>
-                    <li class="footer-navigation__item">
-                        <a class=" footer-link" href="research">Student life</a>
-                    </li>
-                    <li class="footer-navigation__item">
-                        <a class=" footer-link" href="student-life">Research</a>
-                    </li>
-                    <li class="footer-navigation__item">
-                        <a class=" footer-link" href="international">International</a>
-                    </li>
+                                </div>
+
+                                <div class="item">
+                                    <div class="testimonial-box">
+                                        <div class="testimonial-heading">Industrial Testimonials</div>
+                                        <div class="testimonial-image-box">
+                                            <img src="./img/persion2.jpeg" alt="Los Angeles" style="">
+                                        </div>
+                                        <div class="testimonial-author">Emma. Olivia</div>
+                                        <div class="testimonial-author-desig">Operations, Manager</div>
+                                        <div class="testimonial-author-comp">Olivia Management</div>
+                                        <div class="line-sep"></div>
+                                        <div class="testimonial-text">
+                                            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sequi impedit alias adipisci modi ipsum. Dolore repudiandae, possimus.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="item">
+                                    <div class="testimonial-box">
+                                        <div class="testimonial-heading">Industrial Testimonials</div>
+                                        <div class="testimonial-image-box">
+                                            <img src="./img/persion3.jpeg" alt="Los Angeles" style="">
+                                        </div>
+                                        <div class="testimonial-author">Ava. Isabella</div>
+                                        <div class="testimonial-author-desig">Accounts, Manager</div>
+                                        <div class="testimonial-author-comp">Isabella Engineering</div>
+                                        <div class="line-sep"></div>
+                                        <div class="testimonial-text">
+                                            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sequi impedit alias adipisci modi ipsum. Dolore repudiandae, possimus.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Left and right controls -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+
+
+        <!-- footer -->
+        <div class="footer">
+            <div class="footer-head">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xs-12 col-md-4 footer-college-logo">
+                            <div class="footer-logo-box">
+                                <img src="./img/logo/llogo.png" alt="MY University" class="logo footer-logo">
+
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-4 text-center University-address">
+                            <span>
+                                <strong class="strong  ">University headquarters</strong>
+                                <br>
+                                <span class="address"> PO 620, PC 130, Al Dera, Dubai UEA
+                                    <br> Tel:+971 12345667, Fax:+971 2223455
+                                    <br> Email: </span>
+                                <span class="email">info@my.edu.my</span>
+                            </span>
+                        </div>
+                        <div class="col-xs-12 col-md-4 hidden-xs text-center social-icons">
+                            <i class="fa fa-facebook-square social-icon" style="color:blue"></i>
+                            <i class="fa fa-twitter-square social-icon" style="color:lightblue"></i>
+                            <i class="fa fa-google-plus-square social-icon" style="color:red"></i>
+                            <i class="fa fa-google-plus-square social-icon" style="color:red"></i>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="footer__links text-center">
+
+                <div class="footer-nav">
+                    <ul class="footer-navigation__list">
+                        <li class="footer-navigation__item">
+                            <a class=" footer-link" href="about">Home</a>
+                        </li>
+                        <li class="footer-navigation__item">
+                            <a class=" footer-link" href="admission">About Us</a>
+                        </li>
+                        <li class="footer-navigation__item">
+                            <a class=" footer-link" href="academic">Admission</a>
+                        </li>
+                        <li class="footer-navigation__item">
+                            <a class=" footer-link" href="research">Student life</a>
+                        </li>
+                        <li class="footer-navigation__item">
+                            <a class=" footer-link" href="student-life">Research</a>
+                        </li>
+                        <li class="footer-navigation__item">
+                            <a class=" footer-link" href="international">International</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer__sub text-center">
+                <ul>
+                    <li class=" footersub-link">Sitemap</li>
+                    <li class=" footersub-link">Private Notice</li>
+                    <li class=" footersub-link">Accessibility</li>
+                    <li class=" footersub-link">About this site</li>
                 </ul>
+                <span class="Copyright">Copyright
+                    <i class="fa fa-copyright" aria-hidden="true"></i>2018 MY University. All Right Reserved</span>
             </div>
         </div>
-        <div class="footer__sub text-center">
-            <ul>
-                <li class=" footersub-link">Sitemap</li>
-                <li class=" footersub-link">Private Notice</li>
-                <li class=" footersub-link">Accessibility</li>
-                <li class=" footersub-link">About this site</li>
-            </ul>
-            <span class="Copyright">Copyright
-                <i class="fa fa-copyright" aria-hidden="true"></i>2018 MY University. All Right Reserved</span>
-        </div>
-    </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </main>
+
 </body>
 
 </html>
