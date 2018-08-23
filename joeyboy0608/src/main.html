@@ -15,28 +15,487 @@
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 </head>
+<script>
+        function animate(val) {
+            $('#' + val).each(function () {
+                $(this).prop('Counter', 0).animate({
+                    Counter: $(this).text()
+                }, {
+                    duration: 4000,
+                    easing: 'swing',
+                    step: function (now) {
+                        console.log(now);
+                        $(this).text(Math.ceil(now));
+                    }
+                });
+            });
+        }
+        $(document).ready(function () {
+            animate('num_one');
+            animate('num_two');
+            animate('num_three');
+            animate('num_four');
+        });
+    
+        $(document).ready(function () {
+            "use strict";
+            $('.menu > ul > li:has( > ul)').addClass('menu-dropdown-icon');
+            $('.menu > ul > li > ul:not(:has(ul))').addClass('normal-sub');
+            $(".menu > ul").before("<a href=\"#\" class=\"menu-mobile\">&nbsp;</a>");
+            $(".menu > ul > li").hover(function (e) {
+                if ($(window).width() > 943) {
+                    $(this).children("ul").stop(true, false).fadeToggle(150);
+                    e.preventDefault();
+                }
+            });
+            $(".menu > ul > li").click(function () {
+                if ($(window).width() <= 943) {
+                    $(this).children("ul").fadeToggle(150);
+                }
+            });
+            $(".menu-mobile").click(function (e) {
+                $(".menu > ul").toggleClass('show-on-mobile');
+                e.preventDefault();
+            });
+        });
+        $(window).resize(function () {
+            $(".menu > ul > li").children("ul").hide();
+            $(".menu > ul").removeClass('show-on-mobile');
+        });
+    </script>
 
 <body>
-    <section class="mobile-header">
-            <div class="search-box">
-                <input type="text" name="Login" id="login" class="search" placeholder="Search">
-                <i class="fa fa-search search-icon" aria-hidden="true"></i>
+        <section class="mobile-header">
+                <div class="search-box">
+                    <input type="text" name="Login" id="login" class="search" placeholder="Search">
+                    <i class="fa fa-search search-icon" aria-hidden="true"></i>
+                </div>
+                <div class="dropdown">
+                    <select class="quick-links">
+                        <option value="Quick links">
+                            <a href="#">Quick links</a>
+                        </option>
+                        <option value="Faculty & Staff">
+                            <a>Faculty & Staff</a>
+                        </option>
+                        <option value="Students">
+                            <a href="#">Students</a>
+                        </option>
+                        <option value=">Visitors">
+                            <a href="#">Visitors</a</option>
+                                <option value="Alumni">
+                                    <a href="#">Alumni</a>
+                                </option>
+                                <option value="Mymy">
+                                    <a href="#">Mymy</a>
+                                </option>
+                                <option value="Directory">
+                                    <a href="#">Directory</a>
+                                </option>
+                    </select>
+        
+                </div>
+        
+            </section>
+        
+            <div class="menu-container">
+                    
+                <div class="navigation-menu-sub">
+                    <ul class="navigation__list">
+                        <li class="navigation__item">
+                            <a class="navigation__link nav-sub-link" href="about">Faculty & Staff</a>
+                        </li>
+                        <li class="navigation__item">
+                            <a class="navigation__link nav-sub-link" href="admission">Students</a>
+                        </li>
+                        <li class="navigation__item">
+                            <a class="navigation__link nav-sub-link" href="academic">Visitors</a>
+                        </li>
+                        <li class="navigation__item">
+                            <a class="navigation__link nav-sub-link" href="research">Alumni</a>
+                        </li>
+                        <li class="navigation__item">
+                            <a class="navigation__link nav-sub-link" href="student-life">myMY</a>
+                        </li>
+                        <li class="navigation__item">
+                            <a class="navigation__link nav-sub-link" href="international">Directory</a>
+                        </li>
+                        <li class="navigation__item">
+                            <a class="navigation__link nav-sub-link">
+                                <strong>Login</strong>
+                            </a>
+                            <div class="search-box">
+                                <input type="text" name="Login" id="login" class="search">
+                                <i class="fa fa-search search-icon" aria-hidden="true"></i>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="menu">
+                    <a href="#" class="logo">
+                        <img src="./img/logo/llogo.png" alt="MY University" class="logo-img">
+                    </a>
+                    <ul class="clearfix">
+                        <li>
+                            <a href="#">International</a>
+                            <ul>
+                                <li>
+                                    <a href="#">School</a>
+                                    <ul>
+                                        <li>
+                                            <a href="#">Lidership</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">History</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Locations</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Careers</a>
+                                        </li>
+                                    </ul>
+                                </li>
+        
+                                <li>
+                                    <a href="#">Empty sub</a>
+                                    <ul>
+                                        <li>
+                                            <img src="https://placeimg.com/300/200/people">
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#">Student life</a>
+        
+                            <ul>
+                                <li>
+                                    <a href="#">School</a>
+                                    <ul>
+                                        <li>
+                                            <a href="#">Lidership</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">History</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Locations</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Careers</a>
+                                        </li>
+                                    </ul>
+                                </li>
+        
+                                <li>
+                                    <a href="#">Empty sub</a>
+                                    <ul>
+                                        <li>
+                                            <img src="https://placeimg.com/300/200/people">
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <ul>
+                                <li>
+                                    <a href="#">School</a>
+                                    <ul>
+                                        <li>
+                                            <a href="#">Lidership</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">History</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Locations</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Careers</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#">Study</a>
+                                    <ul>
+                                        <li>
+                                            <a href="#">Undergraduate</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Masters</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">International</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Online</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#">Research</a>
+                                    <ul>
+                                        <li>
+                                            <a href="#">Undergraduate research</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Masters research</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Funding</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#">Something</a>
+                                    <ul>
+                                        <li>
+                                            <img src="https://placeimg.com/300/200/nature">
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#">Research</a>
+                            <ul>
+                                <li>
+                                    <a href="#">Today</a>
+                                </li>
+                                <li>
+                                    <a href="#">Calendar</a>
+                                </li>
+                                <li>
+                                    <a href="#">Sport</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#">Academic</a>
+                            <ul>
+                                <li>
+                                    <a href="#">School</a>
+                                    <ul>
+                                        <li>
+                                            <a href="#">Lidership</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">History</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Locations</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Careers</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#">Study</a>
+                                    <ul>
+                                        <li>
+                                            <a href="#">Undergraduate</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Masters</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">International</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Online</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#">Empty sub</a>
+                                    <ul>
+                                        <li>
+                                            <img src="https://placeimg.com/300/200/people">
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#">Admission</a>
+                            <ul>
+                                <li>
+                                    <a href="#">School</a>
+                                    <ul>
+                                        <li>
+                                            <a href="#">Lidership</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">History</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Locations</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Careers</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#">Study</a>
+                                    <ul>
+                                        <li>
+                                            <a href="#">Undergraduate</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Masters</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">International</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Online</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#">Study</a>
+                                    <ul>
+                                        <li>
+                                            <a href="#">Undergraduate</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Masters</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">International</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Online</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#">Empty sub</a>
+                                    <ul>
+                                        <li>
+                                            <img src="https://placeimg.com/300/200/people">
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#">About</a>
+                            <ul>
+                                <li>
+                                    <a href="#">School</a>
+                                    <ul>
+                                        <li>
+                                            <a href="#">Lidership</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">History</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Locations</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Careers</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#">Study</a>
+                                    <ul>
+                                        <li>
+                                            <a href="#">Undergraduate</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Masters</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">International</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Online</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#">Study</a>
+                                    <ul>
+                                        <li>
+                                            <a href="#">Undergraduate</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Masters</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">International</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Online</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#">Empty sub</a>
+                                    <ul>
+                                        <li>
+                                            <img src="https://placeimg.com/300/200/people">
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
             </div>
-            <div class="dropdown">
-                <select class="quick-links">
-                    <option value="Quick links"><a href="#">Quick links</a></option>
-                    <option value="Faculty & Staff"><a>Faculty & Staff</a></option>
-                    <option value="Students"><a href="#">Students</a></option>
-                    <option value=">Visitors"><a href="#">Visitors</a</option>
-                    <option value="Alumni"><a href="#">Alumni</a></option>
-                    <option value="Mymy"><a href="#">Mymy</a></option>
-                    <option value="Directory"><a href="#">Directory</a></option>
-                </select>
-    
-            </div>
-            
-
-    </section>
+        
+        
+            <!-- <nav class="navbar navbar-default ">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <div class="logo-box_nav">
+                            <img src="./img/logo/llogo.png" alt="MY University" class="logo">
+                        </div>
+        
+                    </div>
+                    <div class="collapse navbar-collapse" id="myNavbar">
+                        <ul class="nav navbar-nav">
+                            <li class="">
+                                <a class="navigation__link_nav" href="about">About</a>
+                            </li>
+                            <li class="">
+                                <a class="navigation__link_nav" href="admission">admission</a>
+                            </li>
+                            <li class="">
+                                <a class="navigation__link_nav" href="academic">Academic</a>
+                            </li>
+                            <li class="">
+                                <a class="navigation__link_nav" href="research">Research</a>
+                            </li>
+                            <li class="">
+                                <a class="navigation__link_nav" href="student-life">Student life</a>
+                            </li>
+                            <li class="">
+                                <a class="navigation__link_nav" href="international">International</a>
+                            </li>
+        
+                        </ul>
+        
+                    </div>
+                </div>
+            </nav> -->
+        
+            <!-- Logo and navigation -->
+            <main>
+        
+        
+        
        
             <!-- section feature -->
             <div class="section-feature">

@@ -30,7 +30,6 @@
                 duration: 4000,
                 easing: 'swing',
                 step: function (now) {
-                    console.log(now);
                     $(this).text(Math.ceil(now));
                 }
             });
@@ -42,12 +41,29 @@
         animate('num_three');
         animate('num_four');
     });
+    function addSearch() {
+        $(".menu-container").toggleClass('menu-container-with-search');
+        $(".mobile-search-box").toggleClass('mobile-search-box-open');
+        closeHanberger();        
+    }
+    function closeSearchBox() {
+        if($("#mobile-search-box").hasClass('mobile-search-box-open')){
+            $(".menu-container").toggleClass('menu-container-with-search');
+            $(".mobile-search-box").toggleClass('mobile-search-box-open');
+        }
+    }
+    function closeHanberger() {
+        if($("#show-on-mobile").hasClass('show-on-mobile')){
+            $("#show-on-mobile").toggleClass('show-on-mobile');
+            // $(".mobile-search-box").toggleClass('mobile-search-box-open');
+        }
+    }
 
     $(document).ready(function () {
         "use strict";
         $('.menu > ul > li:has( > ul)').addClass('menu-dropdown-icon');
         $('.menu > ul > li > ul:not(:has(ul))').addClass('normal-sub');
-        $(".menu > ul").before("<a href=\"#\" class=\"menu-mobile\">&nbsp;</a>");
+        $(".menu > ul").before("<a href=\"#\" class=\"menu-mobile\" onClick=\"closeSearchBox()\">&nbsp;</a>");
         $(".menu > ul > li").hover(function (e) {
             if ($(window).width() > 943) {
                 $(this).children("ul").stop(true, false).fadeToggle(150);
@@ -72,40 +88,27 @@
 
 <body>
 
-    <section class="mobile-header">
-        <div class="search-box">
-            <input type="text" name="Login" id="login" class="search" placeholder="Search">
-            <i class="fa fa-search search-icon" aria-hidden="true"></i>
+    <!-- <section class="mobile-header">
+        
+
+    </section> -->
+    <div class="container u-left-right-padd-zero">
+        <div class="row">
+            <div class="col-xs-12">
+                <a href="#" class="logo-box">
+                    <img src="./img/logo/llogo.png" alt="MY University" class="logo-img">
+                </a>
+            </div>
         </div>
-        <div class="dropdown">
-            <select class="quick-links">
-                <option value="Quick links">
-                    <a href="#">Quick links</a>
-                </option>
-                <option value="Faculty & Staff">
-                    <a>Faculty & Staff</a>
-                </option>
-                <option value="Students">
-                    <a href="#">Students</a>
-                </option>
-                <option value=">Visitors">
-                    <a href="#">Visitors</a</option>
-                        <option value="Alumni">
-                            <a href="#">Alumni</a>
-                        </option>
-                        <option value="Mymy">
-                            <a href="#">Mymy</a>
-                        </option>
-                        <option value="Directory">
-                            <a href="#">Directory</a>
-                        </option>
-            </select>
-
-        </div>
-
-    </section>
-
+    
+    </div>
     <div class="menu-container">
+            <div id="mobile-search-box" class="mobile-search-box">
+                    <input type="text" name="Login" id="login" class="search" placeholder="Search">
+                    <i class="fa fa-search mobile-search-icon" aria-hidden="true"></i>
+                </div>                
+
+        </section>
         <div class="navigation-menu-sub">
             <ul class="navigation__list">
                 <li class="navigation__item">
@@ -131,20 +134,20 @@
                         <strong>Login</strong>
                     </a>
                     <div class="search-box">
-                        <input type="text" name="Login" id="login" class="search">
+                        <input type="text" name="Login" id="login" >
                         <i class="fa fa-search search-icon" aria-hidden="true"></i>
                     </div>
                 </li>
             </ul>
         </div>
         <div class="menu">
-            <a href="#" class="logo">
-                <img src="./img/logo/llogo.png" alt="MY University" class="logo-img">
-            </a>
-            <ul class="clearfix">
+                <i class="fa fa-search search-icon-placeholder" aria-hidden="true" 
+                    onclick="addSearch()" ></i>
+
+            <ul id="show-on-mobile" class="clearfix" >
                 <li>
                     <a href="#">International</a>
-                    <ul>
+                    <!-- <ul>
                         <li>
                             <a href="#">School</a>
                             <ul>
@@ -171,12 +174,12 @@
                                 </li>
                             </ul>
                         </li>
-                    </ul>
+                    </ul> -->
                 </li>
                 <li>
                     <a href="#">Student life</a>
 
-                    <ul>
+                    <!-- <ul>
                         <li>
                             <a href="#">School</a>
                             <ul>
@@ -203,8 +206,8 @@
                                 </li>
                             </ul>
                         </li>
-                    </ul>
-                    <ul>
+                    </ul> -->
+                    <!-- <ul>
                         <li>
                             <a href="#">School</a>
                             <ul>
@@ -261,11 +264,11 @@
                                 </li>
                             </ul>
                         </li>
-                    </ul>
+                    </ul> -->
                 </li>
                 <li>
                     <a href="#">Research</a>
-                    <ul>
+                    <!-- <ul>
                         <li>
                             <a href="#">Today</a>
                         </li>
@@ -275,11 +278,11 @@
                         <li>
                             <a href="#">Sport</a>
                         </li>
-                    </ul>
+                    </ul> -->
                 </li>
                 <li>
                     <a href="#">Academic</a>
-                    <ul>
+                    <!-- <ul>
                         <li>
                             <a href="#">School</a>
                             <ul>
@@ -322,11 +325,11 @@
                                 </li>
                             </ul>
                         </li>
-                    </ul>
+                    </ul> -->
                 </li>
                 <li>
                     <a href="#">Admission</a>
-                    <ul>
+                    <!-- <ul>
                         <li>
                             <a href="#">School</a>
                             <ul>
@@ -386,11 +389,11 @@
                                 </li>
                             </ul>
                         </li>
-                    </ul>
+                    </ul> -->
                 </li>
                 <li>
                     <a href="#">About</a>
-                    <ul>
+                    <!-- <ul>
                         <li>
                             <a href="#">School</a>
                             <ul>
@@ -450,7 +453,7 @@
                                 </li>
                             </ul>
                         </li>
-                    </ul>
+                    </ul> -->
                 </li>
             </ul>
         </div>
@@ -701,8 +704,8 @@
         </div>
 
         <!--college-programs-->
-        <section class="college-programs">
-            <div class="container">
+        <section class="college-programs ">
+            <div class="container u-left-right-padd-zero">
                 <div class="row">
                     <div class="col-md-6">
                         <h1 class="program-hedding">College and Programs</h1>
@@ -721,26 +724,35 @@
                     <div class="col-md-6">
                         <div class="row">
                             <div class="col-md-6 col-sm-6 college-activities">
-                                <h3 class="activities-headding">College of
-                                    <br> Medicine</h3>
-                                <img src="img/download.jpg" alt="">
+                                <a href="#">
+                                    <h3 class="activities-headding">College of
+                                        <br> Medicine</h3>
+                                    <img src="img/download.jpg" alt="">
+                                </a>
+
                             </div>
                             <div class="col-md-6 col-sm-6 college-activities">
-                                <h3 class="activities-headding">College of
-                                    <br> Engineering</h3>
-                                <img src="img/download.jpg" alt="">
+                                <a href="#">
+                                    <h3 class="activities-headding">College of
+                                        <br> Engineering</h3>
+                                    <img src="img/download.jpg" alt="">
+                                </a>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6 col-sm-6 college-activities">
-                                <h3 class="activities-headding">College of
-                                    <br> Pharmacy</h3>
-                                <img src="img/download.jpg" alt="">
+                                <a href="#">
+                                    <h3 class="activities-headding">College of
+                                        <br> Pharmacy</h3>
+                                    <img src="img/download.jpg" alt="">
+                                </a>
                             </div>
                             <div class="col-md-6  col-sm-6 college-activities">
-                                <h3 class="activities-headding">School of
-                                    <br> Foundation</h3>
-                                <img src="img/download.jpg" alt="">
+                                <a href="#">
+                                    <h3 class="activities-headding">School of
+                                        <br> Foundation</h3>
+                                    <img src="img/download.jpg" alt="">
+                                </a>
                             </div>
                         </div>
 
@@ -750,7 +762,7 @@
         </section>
         <!-- gallery -->
         <div class="gallery">
-            <div class="container">
+            <div class="container u-left-right-padd-zero">
                 <div class="row">
                     <div class="col-xs-12 col-sm-6 col-md-3 image-box">
                         <h3 class="gallery-headding">My Highlights</h3>
@@ -880,7 +892,7 @@
         </div>
         <!--Apply-Now-->
         <div class="apply-now">
-            <div class="container">
+            <div class="container u-left-right-padd-zero">
                 <div class="row">
                     <div class="col-xs-12 col-sm-8 apply-now-textbox">
                         <div class="apply-now-heading-main">MY University</div>
@@ -896,7 +908,7 @@
         </div>
         <!--Testimonial-->
         <section class="testimonials">
-            <div class="container">
+            <div class="container u-left-right-padd-zero">
                 <div class="row">
                     <div class="col-xs-12 col-md-7 hidden-xs">
                         <iframe width="100%" height="420" src="https://www.youtube.com/embed/tgbNymZ7vqY">
@@ -977,11 +989,11 @@
         <!-- footer -->
         <div class="footer">
             <div class="footer-head">
-                <div class="container">
+                <div class="container u-left-right-padd-zero">
                     <div class="row">
                         <div class="col-xs-12 col-md-4 footer-college-logo">
                             <div class="footer-logo-box">
-                                <img src="./img/logo/llogo.png" alt="MY University" class="logo footer-logo">
+                                <img src="./img/logo/llogo.png" alt="MY University" class="footer-logo">
 
                             </div>
                         </div>
